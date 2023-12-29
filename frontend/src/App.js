@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState, useEffect} from 'react';
+import DocumentUpload from './components/documentUpload';
 
 function App() {
   const [data, setData] = useState(null);
@@ -14,10 +15,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>An Awesome Blog </h1>
-        <h3>On Django, React, Postgres, and Docker </h3>
-
+        <DocumentUpload /> 
         <p>{data}</p>
       </header>
     </div>
