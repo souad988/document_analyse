@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadDocument } from '../store/slices/documentSlice';
 
-function DocumentUpload() {
+const DocumentUpload = () => {
   const dispatch = useDispatch();
   const [file, setFile] = useState({});
   const {
     document, status, loading, error,
-  } = useSelector((state) => state.documents);
+  } = useSelector((state) => state.documentSlice);
 
   const handleChange = (e) => {
     setFile(e.target.files[0]);

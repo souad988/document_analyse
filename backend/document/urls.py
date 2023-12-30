@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
-from . import views
+from .views import DocumentUploadAPIView
 
 urlpatterns = [
-    path('document/upload', views.upload_document),
+    path('document/upload', DocumentUploadAPIView.as_view()),
 ]
