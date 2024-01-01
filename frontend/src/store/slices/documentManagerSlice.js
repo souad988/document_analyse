@@ -4,12 +4,12 @@ import axios from 'axios';
 export const uploadDocument = createAsyncThunk('documents/uploadDocument', async (file) => {
   const formData = new FormData();
   formData.append('file', file);
-  const response = await axios.post('http://127.0.0.1:8000/api/document/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+  const response = await axios.post('http://127.0.0.1:8001/documents/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
   console.log(response.data);
   return response.data;
 });
 
-const documentSlice = createSlice({
+const documentManagerSlice = createSlice({
   name: 'documents',
   initialState: {
     document: {}, loading: false, error: null, status: 'idle',
@@ -34,4 +34,4 @@ const documentSlice = createSlice({
   },
 });
 
-export default documentSlice.reducer;
+export default documentManagerSlice.reducer;
