@@ -18,8 +18,11 @@ Follow the instructions below to set up your local development environment
 <br/>
 <br/>
 
-
-
+##Open Ai API key
+  echo "export OPENAI_API_KEY='yourkey'" >> ~/.zshrc
+  source ~/.zshrc
+  echo $OPENAI_API_KEY
+  
 ## clone Document_analyse repository
 
 - On the homepage of the repository, click on the **code** button, copy the URL in the dropdown then run the following code in your computer terminal:
