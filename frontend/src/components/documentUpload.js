@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { uploadDocument } from '../store/slices/documentSlice';
+import { uploadDocument } from '../store/slices/documentManagerSlice';
 
 function DocumentUpload() {
   const dispatch = useDispatch();

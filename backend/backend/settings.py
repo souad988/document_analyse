@@ -11,10 +11,15 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import environ
+# Initialise environment variables
+ENV = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Import prerequisite libraries
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -26,7 +31,7 @@ SECRET_KEY = 'django-insecure-*b^$435@+cw9xr(c3@$y-d11-shkvs!mmy9gc3m=#f+cjzw1@*
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+CORS_ALLOW_ALL_ORIGINS = True 
 
 # Application definition
 
@@ -52,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ALLOW_ALL_ORIGINS=True
+
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
