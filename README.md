@@ -18,10 +18,10 @@ Follow the instructions below to set up your local development environment
 <br/>
 <br/>
 
-##Open Ai API key
-  echo "export OPENAI_API_KEY='yourkey'" >> ~/.zshrc
-  source ~/.zshrc
-  echo $OPENAI_API_KEY
+##Hugging face API key
+  create .env file inside backend/backend directory 
+  then go to [hagging face url](https://huggingface.co/settings/tokens) create a new account and a new api key after email confirmation
+  then create a new variable in .env file API_TOKEN='your token'
   
 ## clone Document_analyse repository
 
