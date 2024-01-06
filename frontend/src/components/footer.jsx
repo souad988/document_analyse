@@ -26,11 +26,11 @@ const Footer = () => {
   return (
     <Box
       component="footer"
-      className={clsx(classes.layoutBackground, classes.containerPadding)}
+      className={clsx(classes.flexHorizontalCenter, classes.footerContainer)}
     >
       <CssBaseline />
-      <Container maxWidth="sm">
-        <Typography variant="body1" className={clsx(classes.lightText)}>
+      <Container maxWidth="sm" className={clsx(classes.flexHorizontalCenter)}>
+        <Typography variant="body1" className={clsx(classes.secondaryTitle)}>
           souadelmansouri2018@gmail.com
         </Typography>
         <Copyright />

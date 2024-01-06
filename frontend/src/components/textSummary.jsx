@@ -22,7 +22,11 @@ const TextSummary = () => {
     setText(e.target.value);
   };
   return (
-    <Container className={clsx(classes.background, classes.flexHorizontalCenter, classes.container)}>
+    <Container
+      className={
+        clsx(classes.flexHorizontalCenter)
+        }
+    >
       <Typography className={classes.mainTitle} variant="h1" component="h2">Summarize text</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} lg={12}>
@@ -40,13 +44,24 @@ const TextSummary = () => {
           </Box>
         </Grid>
         <Grid item xs={12} lg={12}>
-          <Box className={clsx(classes.shadow, classes.flexHorizontalCenter, classes.boxPadding)}>
+          <Box
+            className={
+              clsx(classes.shadow,
+                classes.flexHorizontalCenter,
+                classes.boxPadding,
+                classes.backgroundColor)
+}
+          >
             <TextareaAutosize
               minRows={20}
               type="text"
               name="text"
               onChange={(e) => handleChange(e)}
-              className={clsx(classes.textArea, classes.fullWidth)}
+              className={
+                clsx(classes.textArea,
+                  classes.fullWidth,
+                  classes.shadow)
+}
             />
             <Button
               variant="contained"
