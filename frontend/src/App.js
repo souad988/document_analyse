@@ -1,13 +1,21 @@
 import React from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DocumentUpload from './components/documentUpload';
 import TextSummary from './components/textSummary';
 import './App.css';
 
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 const App = () => (
-  <div>
-    <TextSummary />
-    <DocumentUpload />
-  </div>
+  <ThemeProvider theme={theme}>
+    <div>
+      <TextSummary />
+      <DocumentUpload />
+    </div>
+  </ThemeProvider>
 );
 
 export default App;

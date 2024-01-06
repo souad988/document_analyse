@@ -10,14 +10,14 @@ export const uploadDocument = createAsyncThunk('documents/uploadDocument', async
 });
 export const textSummarize = createAsyncThunk('documents/textSummarize', async (text) => {
   const response = await axios.post('http://127.0.0.1:8000/api/document/summarize', text, { headers: { 'Content-Type': 'application/json' } });
-  console.log('Summary===>',response.data);
+  console.log('Summary===>', response.data);
   return response.data;
 });
 
 const documentManagerSlice = createSlice({
   name: 'documents',
   initialState: {
-    document: {}, loading: false, error: null, status: 'idle', summary:'',
+    document: {}, loading: false, error: null, status: 'idle', summary: '',
   },
   reducers: {},
   extraReducers: (builder) => {

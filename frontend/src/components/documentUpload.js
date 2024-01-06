@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadDocument } from '../store/slices/documentManagerSlice';
 
-function DocumentUpload() {
+const DocumentUpload = () => {
   const dispatch = useDispatch();
   const [file, setFile] = useState({});
   const {
@@ -23,6 +23,6 @@ function DocumentUpload() {
       <button type="submit" onClick={() => dispatch(uploadDocument(file))}>Upload</button>
     </div>
   );
-}
+};
 
 export default DocumentUpload;
