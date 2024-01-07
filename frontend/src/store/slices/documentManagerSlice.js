@@ -1,23 +1,30 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const localData = JSON.parse(localStorage.getItem('docData')) || { text: '', summary: '' };
+const { REACT_APP_BACKEND_URL } = process.env;
+
 export const uploadDocument = createAsyncThunk('documents/uploadDocument', async (file) => {
   const formData = new FormData();
   formData.append('file', file);
-  const response = await axios.post('http://127.0.0.1:8000/api/document/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
-  console.log(response.data);
+  const response = await axios.post(`${REACT_APP_BACKEND_URL}/upload`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
   return response.data;
 });
 export const textSummarize = createAsyncThunk('documents/textSummarize', async (text) => {
-  const response = await axios.post('http://127.0.0.1:8000/api/document/summarize', text, { headers: { 'Content-Type': 'application/json' } });
-  console.log('Summary===>', response.data);
+  localStorage.setItem('docData', JSON.stringify({...localData,text: text}));
+  const response = await axios.post(`${REACT_APP_BACKEND_URL}/summarize`, text, { headers: { 'Content-Type': 'application/json' } });
   return response.data;
 });
 
 const documentManagerSlice = createSlice({
   name: 'documents',
   initialState: {
-    document: {}, loading: false, error: null, status: 'idle', summary: '',
+    document: {},
+    loading: false,
+    error: null,
+    status: 'idle',
+    summary: '',
+    text: localData.text,
   },
   reducers: {},
   extraReducers: (builder) => {

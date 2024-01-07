@@ -37,10 +37,14 @@ const TextSummary = () => {
         </Box>
         )}
           <Box>
+            {status === 'succeeded'
+            && (
             <Typography>
-              {status === 'succeeded' && ({ summary })}
-              {status === 'failed' && ({ error })}
+              { summary }
             </Typography>
+            )}
+            {status === 'failed' && <Typography>{ error }</Typography>}
+
           </Box>
         </Grid>
         <Grid item xs={12} lg={12}>
@@ -57,6 +61,7 @@ const TextSummary = () => {
               type="text"
               name="text"
               onChange={(e) => handleChange(e)}
+              value={text}
               className={
                 clsx(classes.textArea,
                   classes.fullWidth,

@@ -3,13 +3,12 @@ import { Routes, Route } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Layout from './views/layout';
 import TextSummary from './components/textSummary';
-import './App.css';
 
 const theme = createTheme({
   palette: {
     mode: 'light',
     contrast: '#FFF',
-    text:{
+    text: {
       main: '#394867',
     },
     title: {
