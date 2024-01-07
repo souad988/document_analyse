@@ -12,11 +12,11 @@ import { textSummarize } from '../store/slices/documentManagerSlice';
 
 const TextSummary = () => {
   const classes = useCustomStyles(mainStyles);
-  const [text, setText] = useState('');
-  const dispatch = useDispatch();
   const {
-    loading, error, summary, status,
+    loading, error, summary, status, textTosummarize,
   } = useSelector((state) => state.documents);
+  const [text, setText] = useState(textTosummarize);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -29,14 +29,29 @@ const TextSummary = () => {
     >
       <Typography className={classes.mainTitle} variant="h1" component="h2">Summarize text</Typography>
       <Grid container spacing={2}>
-        <Grid item xs={12} lg={12}>
+        <Grid
+          item
+          xs={12}
+          lg={12}
+        >
           {loading
         && (
-        <Box sx={{ display: 'flex' }}>
+        <Box
+          className={
+            clsx(classes.backgroundColor,
+              classes.shadow,
+              classes.boxPadding)
+          }
+        >
           <CircularProgress />
         </Box>
         )}
-          <Box>
+          <Box className={
+          clsx(classes.backgroundColor,
+            classes.shadow,
+            classes.boxPadding)
+        }
+          >
             {status === 'succeeded'
             && (
             <Typography>
@@ -58,10 +73,12 @@ const TextSummary = () => {
           >
             <TextareaAutosize
               minRows={20}
+              maxRows={20}
               type="text"
               name="text"
               onChange={(e) => handleChange(e)}
               value={text}
+              placeholder="Put the text to summarize here."
               className={
                 clsx(classes.textArea,
                   classes.fullWidth,
@@ -73,6 +90,7 @@ const TextSummary = () => {
               type="submit"
               onClick={() => dispatch(textSummarize(text))}
               className={classes.btn}
+              disabled={loading}
             >
               Summarize
             </Button>

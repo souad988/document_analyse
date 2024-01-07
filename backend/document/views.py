@@ -32,7 +32,7 @@ class DocumentSummarizeAPIView(APIView):
         text = request.data
         print('text:::',text)
         sample_text = get_text_by_doc(text)
-        print('sample_text:::::',len(sample_text))
+        print('sample_text:::::',sample_text)
         print('/*****************************************/')
         print('api_url',API_URL)
         result = ''

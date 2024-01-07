@@ -32,6 +32,8 @@ const mainStyles = (theme) => ({
   textArea: {
     margin: '1rem',
     padding: '2rem',
+    resize: 'vertical',
+    overflowY: 'scroll',
   },
   boxPadding: {
     padding: '2rem',

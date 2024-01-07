@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const localData = JSON.parse(localStorage.getItem('docData')) || { text: '', summary: '' };
+const localData = JSON.parse(localStorage.getItem('docData')) || { text_to_summarize: '', summary: '' };
 const { REACT_APP_BACKEND_URL } = process.env;
 
 export const uploadDocument = createAsyncThunk('documents/uploadDocument', async (file) => {
@@ -11,7 +11,7 @@ export const uploadDocument = createAsyncThunk('documents/uploadDocument', async
   return response.data;
 });
 export const textSummarize = createAsyncThunk('documents/textSummarize', async (text) => {
-  localStorage.setItem('docData', JSON.stringify({...localData,text: text}));
+  localStorage.setItem('docData', JSON.stringify({ ...localData, textTosummarize: text }));
   const response = await axios.post(`${REACT_APP_BACKEND_URL}/summarize`, text, { headers: { 'Content-Type': 'application/json' } });
   return response.data;
 });
@@ -24,7 +24,7 @@ const documentManagerSlice = createSlice({
     error: null,
     status: 'idle',
     summary: '',
-    text: localData.text,
+    text_to_summarize: localData.text_to_summarize,
   },
   reducers: {},
   extraReducers: (builder) => {
