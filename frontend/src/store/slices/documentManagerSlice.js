@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const localData = JSON.parse(localStorage.getItem('docData')) || { text_to_summarize: '', summary: '' };
+const localData = JSON.parse(localStorage.getItem('docData')) || { textToSummarize: '', summary: '' };
 const { REACT_APP_BACKEND_URL } = process.env;
 
 export const uploadDocument = createAsyncThunk('documents/uploadDocument', async (file) => {
@@ -11,7 +11,7 @@ export const uploadDocument = createAsyncThunk('documents/uploadDocument', async
   return response.data;
 });
 export const textSummarize = createAsyncThunk('documents/textSummarize', async (text) => {
-  localStorage.setItem('docData', JSON.stringify({ ...localData, textTosummarize: text }));
+  localStorage.setItem('docData', JSON.stringify({ ...localData, textToSummarize: text }));
   const response = await axios.post(`${REACT_APP_BACKEND_URL}/summarize`, text, { headers: { 'Content-Type': 'application/json' } });
   return response.data;
 });
@@ -24,7 +24,7 @@ const documentManagerSlice = createSlice({
     error: null,
     status: 'idle',
     summary: '',
-    text_to_summarize: localData.text_to_summarize,
+    textToSummarize: localData.textToSummarize,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -48,9 +48,13 @@ const documentManagerSlice = createSlice({
         state.loading = true;
       })
       .addCase(textSummarize.fulfilled, (state, action) => {
-        state.loading = false;
-        state.status = 'succeeded';
-        state.summary = action.payload;
+        localStorage.setItem('docData', JSON.stringify({ ...localData, summary: action.payload }));
+        return {
+          ...state,
+          loading: false,
+          status: 'succeeded',
+          summary: action.payload,
+        };
       })
       .addCase(textSummarize.rejected, (state, action) => {
         state.loading = false;

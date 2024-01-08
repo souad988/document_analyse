@@ -10,7 +10,7 @@ import mainStyles from '../styles/index';
 const Copyright = () => {
   const classes = useCustomStyles(mainStyles);
   return (
-    <Typography variant="body2" className={clsx(classes.lightText)}>
+    <Typography variant="body2" className={clsx(classes.link)}>
       {'Copyright © '}
       {' '}
       {new Date().getFullYear()}

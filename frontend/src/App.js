@@ -5,6 +5,14 @@ import Layout from './views/layout';
 import TextSummary from './components/textSummary';
 
 const theme = createTheme({
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontSize: 14,
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    color: '#F5F5F5',
+  },
   palette: {
     mode: 'light',
     contrast: '#FFF',

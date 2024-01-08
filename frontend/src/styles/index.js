@@ -22,7 +22,7 @@ const mainStyles = (theme) => ({
     color: theme.palette.title.main,
   },
   secondaryTitle: {
-    color: theme.palette.text,
+    color: theme.palette.title.secondary,
     fontWeight: 700,
   },
   shadow: {
@@ -32,6 +32,7 @@ const mainStyles = (theme) => ({
   textArea: {
     margin: '1rem',
     padding: '2rem',
+    color: theme.palette.text,
     resize: 'vertical',
     overflowY: 'scroll',
   },
