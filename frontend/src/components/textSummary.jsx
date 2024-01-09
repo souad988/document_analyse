@@ -50,7 +50,7 @@ const TextSummary = () => {
                 <Typography>{summary}</Typography>
                 )}
                 {status === 'failed' && (
-                <Typography>{error}</Typography>
+                <Typography className={classes.error}>{error}</Typography>
                 )}
               </>
             )}
@@ -84,7 +84,7 @@ const TextSummary = () => {
               type="submit"
               onClick={() => dispatch(textSummarize(text))}
               className={classes.btn}
-              disabled={loading || !text.length}
+             // disabled={loading || !text.length}
             >
               Summarize
             </Button>

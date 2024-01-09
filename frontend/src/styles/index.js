@@ -35,6 +35,7 @@ const mainStyles = (theme) => ({
     color: theme.palette.text,
     resize: 'vertical',
     overflowY: 'scroll',
+    fontSize: '1.2rem',
   },
   boxPadding: {
     padding: '2rem',
@@ -61,6 +62,9 @@ const mainStyles = (theme) => ({
   footerContainer: {
     backgroundColor: theme.palette.background.secondary,
     padding: '5vh 0',
+  },
+  error: {
+    color: 'red',
   },
 });
 
