@@ -22,7 +22,7 @@ const mainStyles = (theme) => ({
     color: theme.palette.title.main,
   },
   secondaryTitle: {
-    color: theme.palette.text,
+    color: theme.palette.title.secondary,
     fontWeight: 700,
   },
   shadow: {
@@ -32,8 +32,10 @@ const mainStyles = (theme) => ({
   textArea: {
     margin: '1rem',
     padding: '2rem',
+    color: theme.palette.text,
     resize: 'vertical',
     overflowY: 'scroll',
+    fontSize: '1.2rem',
   },
   boxPadding: {
     padding: '2rem',
@@ -60,6 +62,9 @@ const mainStyles = (theme) => ({
   footerContainer: {
     backgroundColor: theme.palette.background.secondary,
     padding: '5vh 0',
+  },
+  error: {
+    color: 'red',
   },
 });
 

@@ -31,8 +31,6 @@ Follow the instructions below to set up your local development environment
       $ git clone <copied url>
 ```
 
-The copied URL will have the format of `https://github.com/<your github username>/zubhub.git`
-
 <br/>
 <br/>
 
@@ -54,17 +52,6 @@ The copied URL will have the format of `https://github.com/<your github username
 <br/>
 <br/>
 
-## Install Make
-
-> **_NOTE:_** You can skip this step if you already have **make** installed on your machine. To check if **make** is running on your machine, run the following command `make --version`.
-
-- If you are on a Linux machine, you can install **make** through this [link](https://www.gnu.org/software/make/).
-- If you are on a Mac machine, you can google the specific steps of installing **make** on a mac machine.
-- If you are on a Windows machine, you should refer to the **Windows Specific Setup** section at the beginning of the **Developer Setup** section.
-
-<br/>
-<br/>
-
 ## Setup Backend & Frontend
 
 > **_NOTE_**: For windows users, before running the commands below switch to bash (available through [WSL](https://docs.microsoft.com/en-us/windows/wsl/install)), you can achieve that by typing bash to your command line.
@@ -81,10 +68,7 @@ The copied URL will have the format of `https://github.com/<your github username
        $ docker-compose build
 ```
 
-This will run all the initial setups required and start the server, generate the minimal **.env file** required to run the backend, spins-up all containers defined in the docker-compose file.
-
-In case you're facing issues after running the above, like make: Error,
-kindly run this before the above command:
+This will run all the initial setups required and start the server.
 
 ```sh
        $ docker-compose up
@@ -114,20 +98,15 @@ To stop:
        $ docker-compose down
 ```
 
-Visit http://localhost:8000 on your browser to access the API documentation.
-
 <br/>
 <br/>
 
 ## Setup Frontend
 
-- On your terminal/command line, navigate to **./zubhub/zubhub_frontend/zubhub** directory
-
 - Create a file named **.env** in the frontend root folder (same directory with package.json), with the following content
 
 ```sh
 #.env
-REACT_APP_NODE_ENV=developement
 REACT_APP_BACKEND_DEVELOPMENT_URL=http://127.0.0.1:8000
 ```
 
@@ -135,6 +114,11 @@ Visit **localhost:3000** on your browser to access the frontend.
 
 <br/>
 <br/>
+
+# test backend
+
+- access docker container by runing this command: docker exec -it <containerId> /bin/sh
+- then run this command : python manage.py test document.tests
 
 # Contributions
 

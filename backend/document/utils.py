@@ -45,5 +45,5 @@ def get_text_by_doc(doc):
     return None
 
 def split_chunks(text):
-    chnk = 60000
+    chnk = 4000
     return[text[idx : idx + chnk] for idx in range(0, len(text), chnk)]

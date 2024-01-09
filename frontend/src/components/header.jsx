@@ -35,7 +35,7 @@ function Header() {
             Categorize
           </Link>
           <Link
-            to="/summarize"
+            to="/Q&A"
             className={classes.link}
           >
             Q&A
