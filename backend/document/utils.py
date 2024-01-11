@@ -1,8 +1,20 @@
 import csv
 import os
 from django.conf import settings
+import PyPDF2
 
-path = os.path.join(settings.BASE_DIR, 'media/documents/text_refactored.csv')
+path = os.path.join(settings.BASE_DIR, 'media/documents')
+
+def extract_text_from_pdf(file):
+    with open(os.path.join(settings.BASE_DIR,file), "rb") as pdf_file:
+        read_pdf = PyPDF2.PdfFileReader(pdf_file)
+        number_of_pages = read_pdf.getNumPages()
+        page = read_pdf.pages[0]
+        page_content = page.extractText()
+        print(page_content)
+
+
+
 def refactore_text():
     with open('../media/documents/text_segments.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -35,7 +47,7 @@ def get_text_by_page_and_doc(doc_name, pagenum):
     return None
 
 def get_text_by_doc(doc):
-    with open(path, newline='') as csvfile:
+    with open(os.path.join(path,'text_refactored.csv'), newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         text = ''
         for row in reader:

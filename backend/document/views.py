@@ -21,9 +21,11 @@ class DocumentUploadAPIView(APIView):
         serializer = DocumentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            print(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
+   
 
 class DocumentSummarizeAPIView(APIView):
     def post(self, request, format=None):

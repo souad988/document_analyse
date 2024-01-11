@@ -37,6 +37,21 @@ export const textSummarize = createAsyncThunk('documents/textSummarize', async (
   }
 });
 
+export const answerQuestion = createAsyncThunk('documents/answerQuestion', async (data, { rejectWithValue }) => {
+  try {
+    const response = await axios.post(`${REACT_APP_BACKEND_URL}/question`, { context: data.text, question: data.question }, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+    console.log('response from backend', response);
+    return response.data;
+  } catch (err) {
+    // Use `err.response.data` as `action.payload` for a `rejected` action,
+    // by explicitly returning it using the `rejectWithValue()` utility
+    console.log('from action catch:', err.response.data.error);
+    return rejectWithValue(err.response.data.error);
+  }
+});
+
 // Create a slice for managing document-related state
 const documentManagerSlice = createSlice({
   name: 'documents',
@@ -47,6 +62,8 @@ const documentManagerSlice = createSlice({
     status: 'idle', // Represents the current status of actions (idle/loading/succeeded/failed)
     summary: '', // Holds summarized text
     textToSummarize: '', // Stores text to be summarized
+    questions: ['first question', 'second question'],
+    answers: ['first answer', 'second answer'],
   },
   reducers: {}, // No additional reducers defined
   extraReducers: (builder) => {
@@ -91,6 +108,31 @@ const documentManagerSlice = createSlice({
           loading: false,
           status: 'failed',
           error: action.payload,
+        };
+      })
+      .addCase(answerQuestion.pending, (state) => {
+        state.status = 'loading';
+        state.loading = true;
+      })
+      .addCase(answerQuestion.fulfilled, (state, action) => {
+        // Update state when text summarization action succeeds
+        localStorage.setItem('docData', JSON.stringify({ ...localData, answers: [...state.answers, action.payload] }));
+        return {
+          ...state,
+          loading: false,
+          status: 'succeeded',
+          answers: [...state.answers, action.payload],
+        };
+      })
+      .addCase(answerQuestion.rejected, (state, action) => {
+        // Update state when text summarization action fails
+        console.log('payload error', action.payload);
+        return {
+          ...state,
+          loading: false,
+          status: 'failed',
+          error: action.payload,
+          answers: [...state.answers, null],
         };
       });
   },

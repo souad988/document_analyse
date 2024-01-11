@@ -24,7 +24,7 @@ const TextSummary = () => {
   return (
     <Container
       className={
-        clsx(classes.flexHorizontalCenter)
+        clsx(classes.flexVerticalCenter)
         }
     >
       <Typography className={classes.mainTitle} variant="h1" component="h2">Summarize text</Typography>
@@ -37,7 +37,7 @@ const TextSummary = () => {
           <Box
             className={clsx(
               classes.backgroundColor,
-              classes.flexHorizontalCenter,
+              classes.flexVerticalCenter,
               classes.shadow,
               classes.boxPadding,
             )}
@@ -60,7 +60,7 @@ const TextSummary = () => {
           <Box
             className={
               clsx(classes.shadow,
-                classes.flexHorizontalCenter,
+                classes.flexVerticalCenter,
                 classes.boxPadding,
                 classes.backgroundColor)
 }
@@ -75,6 +75,7 @@ const TextSummary = () => {
               placeholder="Put the text to summarize here."
               className={
                 clsx(classes.textArea,
+                  classes.text,
                   classes.fullWidth,
                   classes.shadow)
 }
@@ -84,7 +85,7 @@ const TextSummary = () => {
               type="submit"
               onClick={() => dispatch(textSummarize(text))}
               className={classes.btn}
-             // disabled={loading || !text.length}
+              disabled={loading || !text.length}
             >
               Summarize
             </Button>

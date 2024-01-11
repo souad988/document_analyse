@@ -4,10 +4,31 @@ const mainStyles = (theme) => ({
     padding: '10vh 0',
     background: 'url(imgs/typo1.png) left center repeat',
   },
-  flexHorizontalCenter: {
+  subContainer: {
+    minHeight: '60vh',
+  },
+  justifyContentCenter: {
+    justifyContent: 'center',
+  },
+  flexVerticalSpaceBetween: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  flexVerticalCenter: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  flexHorizontalCenter: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  flexSpaceBetween: {
+    display: 'flex',
+    justifyContent: 'spaceBetween',
     alignItems: 'center',
   },
   fullWidth: {
@@ -32,10 +53,8 @@ const mainStyles = (theme) => ({
   textArea: {
     margin: '1rem',
     padding: '2rem',
-    color: theme.palette.text,
     resize: 'vertical',
     overflowY: 'scroll',
-    fontSize: '1.2rem',
   },
   boxPadding: {
     padding: '2rem',
@@ -65,6 +84,26 @@ const mainStyles = (theme) => ({
   },
   error: {
     color: 'red',
+  },
+  displayNone: {
+    display: 'none',
+  },
+  input: {
+    border: 'none',
+    width: '90%',
+  },
+  bullet: {
+    width: '30px',
+    height: '30px',
+    borderRadius: '50%',
+    backgroundColor: theme.palette.main,
+    color: theme.palette.contrast,
+    fontSize: '1.2rem',
+    fontWeight: 900,
+  },
+  text: {
+    color: `${theme.palette.text}!important`,
+    fontSize: '1.2rem',
   },
 });
 
