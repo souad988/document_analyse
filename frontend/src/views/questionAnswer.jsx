@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Container, Box,
@@ -10,16 +10,24 @@ import useCustomStyles from '../styles/customStyle';
 import mainStyles from '../styles';
 import DocumentUpload from '../components/documentUpload';
 import TextListItem from '../components/textListItem';
-import { answerQuestion } from '../store/slices/documentManagerSlice';
+import { questionAnswer } from '../store/slices/questionAnswerSlice';
 
 function QuestionAnswer() {
   const classes = useCustomStyles(mainStyles);
   const [question, setQuestion] = useState('');
-  const { questions, answers, document } = useSelector((state) => state.documents);
+  const { document } = useSelector((state) => state.documents);
+  let { loading, questions, answers } = useSelector((state) => state.questionAnswer);
   const dispatch = useDispatch();
-  console.log(questions, answers);
+  const scrollableDivRef = useRef();
+  useEffect(() => {
+    // Scroll to the bottom when the component mounts or when content changes
+    scrollableDivRef.current.scrollTop = scrollableDivRef.current.scrollHeight + '2rem';
+  }, [questions, answers]);
+
   const handleSubmit = () => {
-    dispatch(answerQuestion({ text: document.content, question }));
+    questions = [...questions, question];
+    answers = [...answers, ''];
+    dispatch(questionAnswer({ text: document.text, question }));
   };
   return (
     <Container
@@ -46,20 +54,25 @@ function QuestionAnswer() {
               classes.backgroundColor,
               classes.shadow,
               classes.boxPadding,
-              classes.textArea,
               classes.subContainer,
               classes.flexVerticalSpaceBetween,
             )}
           >
             <Box
+              ref={scrollableDivRef}
               className={clsx(
                 classes.boxPadding,
+                classes.scrollable,
               )}
             >
               {questions && questions.map((value, index) => (
                 <Grid key={`qacontainer${value}`}>
                   <TextListItem type="Q" text={value} />
-                  <TextListItem type="A" text={answers[index]} />
+                  <TextListItem
+                    type="A"
+                    text={answers[index]}
+                    loading={index === questions.length ? loading : false}
+                  />
                 </Grid>
               ))}
             </Box>

@@ -2,6 +2,7 @@ import csv
 import os
 from django.conf import settings
 import PyPDF2
+import re
 
 path = os.path.join(settings.BASE_DIR, 'media/documents')
 #/media/documents/Emotional_Strategies_in_Job_Hunt_-_Students_Slides_NHPosfu.pdf
@@ -13,7 +14,11 @@ def extract_text_from_pdf(file):
         read_pdf = PyPDF2.PdfReader(pdf_file) 
         page = read_pdf.pages[0]
         page_content = page.extract_text()
-        return page_content
+        words = words = re.findall(r'\S+|\s', page_content)
+        words = [word for word in words if word not in [' ', '\n']]
+        print('words',words)
+        # Join the words with spaces
+        return ' '.join(words)
 
 
 

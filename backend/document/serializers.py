@@ -6,7 +6,7 @@ class DocumentSerializer(serializers.ModelSerializer):
     text = serializers.SerializerMethodField()
     class Meta:
         model = Document
-        fields = ('id', 'file', 'uploaded_at', 'text')
+        fields = ('id', 'file', 'uploaded_at', 'name','text')
 
     def get_text(self, obj):
         # Assuming you have a method to extract text from the file path

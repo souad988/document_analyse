@@ -20,18 +20,14 @@ const DocumentUploadForm = (props) => {
     setTouched,
     errors,
     setFieldValue,
+    resetForm,
   } = props;
   const classes = useCustomStyles(mainStyles);
   const dispatch = useDispatch();
   const fileInputRef = useRef();
-  // const [file, setFile] = useState(null);
   const {
     document, status, loading, error,
   } = useSelector((state) => state.documents);
-
-  // const handleChange = (e) => {
-  //  setFile(e.target.files[0]);
-  // };
 
   const handleFileButtonClick = (fileInput) => {
     fileInput.current.click();
@@ -42,6 +38,11 @@ const DocumentUploadForm = (props) => {
     setFieldValue('file', event.currentTarget.files[0], true).then((errors) => {
       errors.file && setFieldValue('file', null, false);
     });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await dispatch(uploadDocument(values.file));
+    resetForm();
   };
   return (
     <Grid
@@ -66,8 +67,8 @@ const DocumentUploadForm = (props) => {
             <CircularProgress />
           ) : (
             <>
-              {status === 'succeeded' && (
-              <Typography>{document.file}</Typography>
+              {(status === 'succeeded' || (status === 'idle' && document.name)) && (
+              <Typography className={classes.text}>{document.name}</Typography>
               )}
               {status === 'failed' && (
               <Typography className={classes.error}>{error}</Typography>
@@ -113,7 +114,7 @@ const DocumentUploadForm = (props) => {
             endIcon={<FileUploadIcon />}
             variant="contained"
             type="submit"
-            onClick={() => dispatch(uploadDocument(values.file))}
+            onClick={handleSubmit}
             className={classes.btn}
             disabled={loading || !values.file}
           >
@@ -143,6 +144,7 @@ DocumentUploadForm.propTypes = {
   }).isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setTouched: PropTypes.func.isRequired,
+  resetForm: PropTypes.func.isRequired,
 };
 
 const DocumentUpload = withFormik({

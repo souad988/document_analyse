@@ -14,8 +14,25 @@ import json
 API_URL = os.environ.get('API_URL_GOOGLE')
 API_KEY= os.environ.get('API_TOKEN')
 headers = {"Authorization": f"Bearer {API_KEY}"}
+QA_API_URL = os.environ.get('DEEP_INFRA_URL')
+QA_API_KEY = os.environ.get('DEEP_INFRA_KEY')
+class QuestionAnswerAPIView(APIView):
 
-
+    def post(self, request, format=None):
+        context = request.data['context']
+        question = request.data['question']
+        if not context or not question:
+            return Response({'error': 'non valid input '}, status=status.HTTP_400_BAD_REQUEST)
+        try:    
+                data = {'context': context, 'question': question}
+                response = requests.post(QA_API_URL, headers={"Authorization": f"Bearer {QA_API_KEY}"}, json=data)
+                data = response.json()
+                return Response(data, status=status.HTTP_200_OK)
+        except APIException as e:
+            # Handle APIException and create the response
+                print('error for exeption', str(e))
+                return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
 class DocumentUploadAPIView(APIView):
     parser_classes = (MultiPartParser,)
 
@@ -23,21 +40,6 @@ class DocumentUploadAPIView(APIView):
         serializer = DocumentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            print('before',serializer.data)
-            
-            #text = extract_text_from_pdf(serializer.data['file'])
-            '''
-            data = json.loads(serializer.data)
-            data['text'] = text
-            print('after',serializer.data,text)
-            data = json.dumps(data)
-            '''
-            data={
-                'id':serializer.data['id'],
-                'file': serializer.data['file'],
-                'uploaded_at':serializer.data['uploaded_at'],
-            }
-            print('after',data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

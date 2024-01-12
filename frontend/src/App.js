@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Layout from './views/layout';
 import TextSummary from './components/textSummary';
@@ -21,7 +22,7 @@ const theme = createTheme({
   palette: {
     mode: 'light',
     contrast: '#FFF',
-    main: '#90CAF9',
+    main: '#394867',
     A400: '#9BA4B5',
     text: {
       main: '#394867',
@@ -36,15 +37,19 @@ const theme = createTheme({
     },
   },
 });
-const App = () => (
-  <ThemeProvider theme={theme}>
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route path="summarize" element={<TextSummary />} />
-        <Route path="/Q&A" element={<QuestionAnswer />} />
-      </Route>
-    </Routes>
-  </ThemeProvider>
-);
+const App = () => {
+  const { document } = useSelector((state) => state.documents);
+  const { loading, questions, answers } = useSelector((state) => state.questionAnswer);
+  return (
+    <ThemeProvider theme={theme}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="summarize" element={<TextSummary />} />
+          <Route path="/Q&A" element={<QuestionAnswer />} />
+        </Route>
+      </Routes>
+    </ThemeProvider>
+  );
+};
 
 export default App;

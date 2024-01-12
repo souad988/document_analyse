@@ -52,12 +52,13 @@ const mainStyles = (theme) => ({
   },
   textArea: {
     margin: '1rem',
-    padding: '2rem',
+    padding: '2%',
     resize: 'vertical',
     overflowY: 'scroll',
+    border: 'none',
   },
   boxPadding: {
-    padding: '2rem',
+    padding: '2%',
   },
   logo: {
     fontWeight: 900,
@@ -65,7 +66,7 @@ const mainStyles = (theme) => ({
   link: {
     color: theme.palette.title.secondary,
     fontWeight: 700,
-    marginRight: '2rem',
+    marginRight: '2%',
     textDecoration: 'none',
     '&:hover': {
       color: theme.palette.title.main,
@@ -93,17 +94,27 @@ const mainStyles = (theme) => ({
     width: '90%',
   },
   bullet: {
-    width: '30px',
-    height: '30px',
+    width: '25px',
+    height: '25px',
     borderRadius: '50%',
-    backgroundColor: theme.palette.main,
     color: theme.palette.contrast,
-    fontSize: '1.2rem',
+    fontSize: '1.1rem',
     fontWeight: 900,
   },
   text: {
     color: `${theme.palette.text}!important`,
-    fontSize: '1.2rem',
+    fontSize: '1rem',
+  },
+  scrollable: {
+    height: '45vh',
+    resize: 'vertical',
+    overflowY: 'scroll',
+  },
+  mainColor: {
+    backgroundColor: theme.palette.main,
+  },
+  secondaryColor: {
+    backgroundColor: theme.palette.title.main,
   },
 });
 
