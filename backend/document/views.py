@@ -8,6 +8,8 @@ from .models import Document
 from .serializers import DocumentSerializer
 from .utils import *
 import os
+import time
+import json
 
 API_URL = os.environ.get('API_URL_GOOGLE')
 API_KEY= os.environ.get('API_TOKEN')
@@ -21,7 +23,21 @@ class DocumentUploadAPIView(APIView):
         serializer = DocumentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            print(serializer.data)
+            print('before',serializer.data)
+            
+            #text = extract_text_from_pdf(serializer.data['file'])
+            '''
+            data = json.loads(serializer.data)
+            data['text'] = text
+            print('after',serializer.data,text)
+            data = json.dumps(data)
+            '''
+            data={
+                'id':serializer.data['id'],
+                'file': serializer.data['file'],
+                'uploaded_at':serializer.data['uploaded_at'],
+            }
+            print('after',data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

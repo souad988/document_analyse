@@ -4,14 +4,16 @@ from django.conf import settings
 import PyPDF2
 
 path = os.path.join(settings.BASE_DIR, 'media/documents')
+#/media/documents/Emotional_Strategies_in_Job_Hunt_-_Students_Slides_NHPosfu.pdf
 
 def extract_text_from_pdf(file):
-    with open(os.path.join(settings.BASE_DIR,file), "rb") as pdf_file:
-        read_pdf = PyPDF2.PdfFileReader(pdf_file)
-        number_of_pages = read_pdf.getNumPages()
+    print('file path',file)
+    print('file path refactored',os.path.join(settings.BASE_DIR,file[1:]))
+    with open(file, "rb") as pdf_file:
+        read_pdf = PyPDF2.PdfReader(pdf_file) 
         page = read_pdf.pages[0]
-        page_content = page.extractText()
-        print(page_content)
+        page_content = page.extract_text()
+        return page_content
 
 
 
