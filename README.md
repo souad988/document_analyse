@@ -74,15 +74,10 @@ Follow the instructions below to set up your local development environment
 1. Clone the repository. ( [jump to section](#clone-Document_analyse-repository) )
 2. Install [docker](https://docs.docker.com/get-docker/). ( [jump to section](#install-docker) )
 3. Install [docker-compose](https://docs.docker.com/compose/install/). ( [jump to section](#install-docker-compose) )
-4. Install make. ( [jump to section](#install-make) )
-5. Setup Backend & Frontend. ( [jump to section](#Setup-Backend-&-Frontend) )
+4. Setup Backend & Frontend. ( [jump to section](#Setup-Backend-&-Frontend) )
 
 <br/>
 <br/>
-
-##Hugging face API key
-  Visit [hagging face url](https://huggingface.co/settings/tokens) create a new account and a new api key after email confirmation
-  then create a new variable in .env file API_TOKEN='your token'
   
 ## clone Document_analyse repository
 
@@ -164,6 +159,16 @@ To stop:
 
 <br/>
 <br/>
+
+#### Hugging face API key
+- Visit [hagging face url](https://huggingface.co/settings/tokens) create a new account and a new api key after email confirmation.
+- Create a file named **.env** in the backend/backend folder (same directory with settings.py), with the following content
+```
+#.env
+REACT_APP_BACKEND_DEVELOPMENT_URL=http://127.0.0.1:8000/api/document
+API_TOKEN='your token'
+
+```
 
 ## Setup Frontend
 
