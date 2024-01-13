@@ -4,10 +4,31 @@ const mainStyles = (theme) => ({
     padding: '10vh 0',
     background: 'url(imgs/typo1.png) left center repeat',
   },
-  flexHorizontalCenter: {
+  subContainer: {
+    minHeight: '60vh',
+  },
+  justifyContentCenter: {
+    justifyContent: 'center',
+  },
+  flexVerticalSpaceBetween: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  flexVerticalCenter: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  flexHorizontalCenter: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  flexSpaceBetween: {
+    display: 'flex',
+    justifyContent: 'spaceBetween',
     alignItems: 'center',
   },
   fullWidth: {
@@ -17,6 +38,7 @@ const mainStyles = (theme) => ({
     color: theme.palette.contrast,
     fontWeight: 700,
     backgroundColor: theme.palette.title.main,
+    alignSelf: 'end',
   },
   mainTitle: {
     color: theme.palette.title.main,
@@ -31,14 +53,19 @@ const mainStyles = (theme) => ({
   },
   textArea: {
     margin: '1rem',
-    padding: '2rem',
-    color: theme.palette.text,
     resize: 'vertical',
     overflowY: 'scroll',
-    fontSize: '1.2rem',
+    color: theme.palette.text,
+    border: 'none',
+    '&::placeholder': {
+      color: theme.palette.text,
+    },
   },
   boxPadding: {
-    padding: '2rem',
+    padding: '2%',
+    [theme.breakpoints.up('555')]: {
+      padding: '2%',
+    },
   },
   logo: {
     fontWeight: 900,
@@ -46,7 +73,7 @@ const mainStyles = (theme) => ({
   link: {
     color: theme.palette.title.secondary,
     fontWeight: 700,
-    marginRight: '2rem',
+    margin: '0 3%',
     textDecoration: 'none',
     '&:hover': {
       color: theme.palette.title.main,
@@ -65,6 +92,51 @@ const mainStyles = (theme) => ({
   },
   error: {
     color: 'red',
+  },
+  displayNone: {
+    display: 'none',
+  },
+  input: {
+    border: 'none',
+    width: '90%',
+    '&:focus': {
+      outline: 'none',
+    },
+  },
+  bullet: {
+    width: '25px',
+    height: '25px',
+    borderRadius: '50%',
+    color: theme.palette.contrast,
+    fontSize: '1.1rem',
+    fontWeight: 900,
+  },
+  text: {
+    color: `${theme.palette.text}!important`,
+    fontSize: '1rem',
+  },
+  scrollable: {
+    height: '40vh',
+    resize: 'vertical',
+    overflowY: 'scroll',
+  },
+  mainColor: {
+    backgroundColor: theme.palette.main,
+  },
+  secondaryColor: {
+    backgroundColor: theme.palette.title.main,
+  },
+  nav: {
+    width: '300px',
+  },
+  marginButtom: {
+    marginButtom: '3vh',
+  },
+  verticalBoxPadding: {
+    padding: '1% 0',
+  },
+  midContainer: {
+    width: '90%',
   },
 });
 

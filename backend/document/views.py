@@ -8,13 +8,49 @@ from .models import Document
 from .serializers import DocumentSerializer
 from .utils import *
 import os
+import time
+import json
 
 API_URL = os.environ.get('API_URL_GOOGLE')
 API_KEY= os.environ.get('API_TOKEN')
 headers = {"Authorization": f"Bearer {API_KEY}"}
-
-
+QA_API_URL = os.environ.get('HUGGINGFACE_API_URL_QA')
+class QuestionAnswerAPIView(APIView):
+    """
+    API endpoint for Question-Answering.
+    Expected Data in Request:
+    {
+        "context": "Text context for question-answering",
+        "question": "User-provided question"
+    }
+    Response Format:
+    {
+        "answer": "Answer to the provided question",
+    }
+    """
+    def post(self, request, format=None):
+        context = request.data['context']
+        question = request.data['question']
+        if not context or not question:
+            return Response({'error': 'non valid input '}, status=status.HTTP_400_BAD_REQUEST)
+        try:    
+                data = {'context': context, 'question': question}
+                response = requests.post(QA_API_URL, headers={"Authorization": f"Bearer {API_KEY}"}, json=data)
+                data = response.json()
+                return Response(data, status=status.HTTP_200_OK)
+        except APIException as e:
+                return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
 class DocumentUploadAPIView(APIView):
+    """
+    API endpoint for uploading documents.
+
+    Expected Data in Request:
+    Form data with a file .
+
+    Response Format:
+    Serialized document data.
+    """
     parser_classes = (MultiPartParser,)
 
     def post(self, request, format=None):
@@ -23,9 +59,19 @@ class DocumentUploadAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
+   
 
 class DocumentSummarizeAPIView(APIView):
+    """
+    API endpoint for text summarization.
+
+    Expected Data in Request:
+    Text data to be summarized.
+
+    Response Format:
+    Summarized text.
+    """
     def post(self, request, format=None):
         text = request.data
         result = ''
@@ -35,10 +81,8 @@ class DocumentSummarizeAPIView(APIView):
         try:
             for chunk in chunks:    
                 sample_text = 'summarize: ' + chunk
-                print('chunk', sample_text) 
                 response = requests.post(API_URL, headers=headers, json=sample_text)
                 data = response.json()
-                print('result:', data)
                 if response.status_code == 200:
                     result += data[0]['summary_text']
                 else:

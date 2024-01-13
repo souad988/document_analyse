@@ -24,7 +24,7 @@ const TextSummary = () => {
   return (
     <Container
       className={
-        clsx(classes.flexHorizontalCenter)
+        clsx(classes.flexVerticalCenter)
         }
     >
       <Typography className={classes.mainTitle} variant="h1" component="h2">Summarize text</Typography>
@@ -34,10 +34,11 @@ const TextSummary = () => {
           xs={12}
           lg={12}
         >
+          { summary?.length > 0 && (
           <Box
             className={clsx(
               classes.backgroundColor,
-              classes.flexHorizontalCenter,
+              classes.flexVerticalCenter,
               classes.shadow,
               classes.boxPadding,
             )}
@@ -46,8 +47,8 @@ const TextSummary = () => {
               <CircularProgress />
             ) : (
               <>
-                {status === 'succeeded' && (
-                <Typography>{summary}</Typography>
+                {(status === 'succeeded' || status === 'idle') && (
+                <Typography className={classes.text}>{summary}</Typography>
                 )}
                 {status === 'failed' && (
                 <Typography className={classes.error}>{error}</Typography>
@@ -55,12 +56,13 @@ const TextSummary = () => {
               </>
             )}
           </Box>
+          )}
         </Grid>
         <Grid item xs={12} lg={12}>
           <Box
             className={
               clsx(classes.shadow,
-                classes.flexHorizontalCenter,
+                classes.flexVerticalCenter,
                 classes.boxPadding,
                 classes.backgroundColor)
 }
@@ -75,7 +77,9 @@ const TextSummary = () => {
               placeholder="Put the text to summarize here."
               className={
                 clsx(classes.textArea,
+                  classes.text,
                   classes.fullWidth,
+                  classes.boxPadding,
                   classes.shadow)
 }
             />
@@ -84,7 +88,7 @@ const TextSummary = () => {
               type="submit"
               onClick={() => dispatch(textSummarize(text))}
               className={classes.btn}
-             // disabled={loading || !text.length}
+              disabled={loading || !text?.length}
             >
               Summarize
             </Button>

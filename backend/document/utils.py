@@ -1,8 +1,27 @@
 import csv
 import os
 from django.conf import settings
+import PyPDF2
+import re
 
-path = os.path.join(settings.BASE_DIR, 'media/documents/text_refactored.csv')
+path = os.path.join(settings.BASE_DIR, 'media/documents')
+#/media/documents/Emotional_Strategies_in_Job_Hunt_-_Students_Slides_NHPosfu.pdf
+
+def extract_text_from_pdf(file):
+    print('file path',file)
+    print('file path refactored',os.path.join(settings.BASE_DIR,file[1:]))
+    with open(file, "rb") as pdf_file:
+        read_pdf = PyPDF2.PdfReader(pdf_file) 
+        page = read_pdf.pages[0]
+        page_content = page.extract_text()
+        words = words = re.findall(r'\S+|\s', page_content)
+        words = [word for word in words if word not in [' ', '\n']]
+        print('words',words)
+        # Join the words with spaces
+        return ' '.join(words)
+
+
+
 def refactore_text():
     with open('../media/documents/text_segments.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -35,7 +54,7 @@ def get_text_by_page_and_doc(doc_name, pagenum):
     return None
 
 def get_text_by_doc(doc):
-    with open(path, newline='') as csvfile:
+    with open(os.path.join(path,'text_refactored.csv'), newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         text = ''
         for row in reader:
