@@ -1,7 +1,69 @@
 
+![Screenshot from 2024-01-13 01-16-52](https://github.com/souad988/document_analyse/assets/59707859/e7684790-2772-4bab-91d1-b4f657b5c0f6)
+![Screenshot from 2024-01-13 02-15-58](https://github.com/souad988/document_analyse/assets/59707859/63aba80c-440f-45c0-bc61-b6c9e7146206)
+![Screenshot from 2024-01-13 02-19-16](https://github.com/souad988/document_analyse/assets/59707859/35c4437f-ee59-4aff-a838-e031a14049f6)
+![Screenshot from 2024-01-13 02-23-17](https://github.com/souad988/document_analyse/assets/59707859/2241593c-f320-4610-b119-2e7792c7730f)
+
 # Intro
 
-**Document analyse** is an open-source, ai powered documente analyser tool for company fianancial data related tasks.
+**Document analyze** is an open-source, AI-powered document analyzer tool for company financial data-related tasks.
+
+# API Documentation
+
+### Question-Answering API
+#### Endpoint: `/questionAnswer`
+**Description:** This API endpoint is used for question-answering on documents.
+**Method:** `POST`
+```
+**Request:**
+{
+    "context": "Text context for question-answering",
+    "question": "User-provided question"
+}
+**Response:**
+{
+    "answer": "Answer to the provided question",
+}
+```
+
+### Document Upload API
+#### Endpoint: /documentUpload
+**Description:** This API endpoint is used for uploading documents. **Method:** `POST` 
+```
+**Request:**
+{
+    "document": "File data"
+}
+Response:
+{
+    "id": 1,
+    "file": "/media/documents/example.pdf",
+    "uploaded_at": "2024-01-12T12:34:56Z",
+    "name": "example.pdf",
+    "text": "This is the extracted text from the document."
+}
+```
+### Document Summarize API
+#### Endpoint: /documentSummarize
+**Description:** This API endpoint is used for text summarization. **Method:** `POST` 
+```
+**Request:**
+{
+    "text": "Text data to be summarized"
+}
+**Response:**
+{
+    "Summarized text",
+}
+```
+
+# To improve:
+
+#### Model Training Locally:
+  Currently, the project relies on external APIs for question-answering and text summarization. Consider exploring the option of downloading pre-trained models and hosting them locally for improved accuracy.
+#### Includes other file formats:
+  The current implementation of the document upload functionality is designed to accept PDF files. However, there's an opportunity to enhance the system by extending support to a broader range of file formats.
+  Refine text extraction from pdf file.
 
 # Development Setup
 
