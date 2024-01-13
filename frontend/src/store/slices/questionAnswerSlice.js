@@ -10,11 +10,15 @@ export const questionAnswer = createAsyncThunk('documents/questionAnswer', async
     const response = await axios.post(`${REACT_APP_BACKEND_URL}/questionAnswer`, { context: data.text, question: data.question }, {
       headers: { 'Content-Type': 'application/json' },
     });
-    console.log('response from backend', response);
     return { answer: response.data.answer, question: data.question };
   } catch (err) {
     return rejectWithValue(err.response.data.error);
   }
+});
+
+export const initializeQAndA = () => ({
+  type: 'documents/initializeQAndA',
+  payload: [],
 });
 
 // Create a slice for managing document-related state
@@ -25,10 +29,15 @@ const questionAnswerSlice = createSlice({
     loading: false, // Indicates if actions are in progress
     error: null, // Holds error information if any action fails
     status: 'idle', // Represents the current status of actions (idle/loading/succeeded/failed)
-    questions: localData.questions,
-    answers: localData.answers,
+    questions: localData.questions || [],
+    answers: localData.answers || [],
   },
-  reducers: {}, // No additional reducers defined
+  reducers: {
+    initializeQAndA: (state, action) => {
+      state.answers = action.payload;
+      state.questions = action.payload;
+    },
+  }, // No additional reducers defined
   extraReducers: (builder) => {
     builder
       .addCase(questionAnswer.pending, (state) => {
@@ -52,17 +61,13 @@ const questionAnswerSlice = createSlice({
           questions: [...state.questions, action.payload.question],
         };
       })
-      .addCase(questionAnswer.rejected, (state, action) => {
-        // Update state when text summarization action fails
-        console.log('payload error', action.payload);
-        return {
-          ...state,
-          loading: false,
-          status: 'failed',
-          error: action.payload,
-          answers: [...state.answers, null],
-        };
-      });
+      .addCase(questionAnswer.rejected, (state, action) => ({
+        ...state,
+        loading: false,
+        status: 'failed',
+        error: action.payload,
+        answers: [...state.answers, '...'],
+      }));
   },
 });
 

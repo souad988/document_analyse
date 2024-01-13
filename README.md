@@ -19,8 +19,7 @@ Follow the instructions below to set up your local development environment
 <br/>
 
 ##Hugging face API key
-  create .env file inside backend/backend directory 
-  then go to [hagging face url](https://huggingface.co/settings/tokens) create a new account and a new api key after email confirmation
+  Visit [hagging face url](https://huggingface.co/settings/tokens) create a new account and a new api key after email confirmation
   then create a new variable in .env file API_TOKEN='your token'
   
 ## clone Document_analyse repository
@@ -97,6 +96,9 @@ To stop:
 ```sh
        $ docker-compose down
 ```
+- access docker container by runing this command: docker exec -it <containerId> /bin/sh
+- activate the virtual environment : source venv/bin/activate
+- run migrations : python3 manage.py makemigrations  then python3 manage.py migrate
 
 <br/>
 <br/>
@@ -107,7 +109,7 @@ To stop:
 
 ```sh
 #.env
-REACT_APP_BACKEND_DEVELOPMENT_URL=http://127.0.0.1:8000
+REACT_APP_BACKEND_DEVELOPMENT_URL=http://127.0.0.1:8000/api/document
 ```
 
 Visit **localhost:3000** on your browser to access the frontend.

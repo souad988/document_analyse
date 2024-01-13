@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Container, Box,
-  Grid, Button,
+  Grid, Button, Typography,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import clsx from 'clsx';
@@ -16,24 +16,22 @@ function QuestionAnswer() {
   const classes = useCustomStyles(mainStyles);
   const [question, setQuestion] = useState('');
   const { document } = useSelector((state) => state.documents);
-  let { loading, questions, answers } = useSelector((state) => state.questionAnswer);
+  const { loading, questions, answers } = useSelector((state) => state.questionAnswer);
   const dispatch = useDispatch();
   const scrollableDivRef = useRef();
   useEffect(() => {
     // Scroll to the bottom when the component mounts or when content changes
-    scrollableDivRef.current.scrollTop = scrollableDivRef.current.scrollHeight + '2rem';
+    scrollableDivRef.current.scrollTop = scrollableDivRef.current.scrollHeight;
   }, [questions, answers]);
 
   const handleSubmit = () => {
-    questions = [...questions, question];
-    answers = [...answers, ''];
     dispatch(questionAnswer({ text: document.text, question }));
   };
   return (
     <Container
       className={
-      clsx(classes.flexVerticalCenter)
-      }
+        clsx(classes.midContainer)
+         }
     >
 
       <Grid container spacing={2}>
@@ -58,23 +56,31 @@ function QuestionAnswer() {
               classes.flexVerticalSpaceBetween,
             )}
           >
+            {' '}
+
             <Box
               ref={scrollableDivRef}
               className={clsx(
-                classes.boxPadding,
                 classes.scrollable,
+                classes.marginButtom,
               )}
             >
-              {questions && questions.map((value, index) => (
-                <Grid key={`qacontainer${value}`}>
-                  <TextListItem type="Q" text={value} />
-                  <TextListItem
-                    type="A"
-                    text={answers[index]}
-                    loading={index === questions.length ? loading : false}
-                  />
-                </Grid>
-              ))}
+              {!document?.text
+                ? (
+                  <Typography className={classes.text}>
+                    Submit a pdf file to start !
+                  </Typography>
+                )
+                : questions && questions.map((value, index) => (
+                  <Box key={`qacontainer${value}`}>
+                    <TextListItem type="Q" text={value} />
+                    <TextListItem
+                      type="A"
+                      text={answers[index]}
+                      loading={index === questions.length ? loading : false}
+                    />
+                  </Box>
+                ))}
             </Box>
             <Box
               className={clsx(
@@ -87,10 +93,15 @@ function QuestionAnswer() {
               <input
                 name="question"
                 value={question}
+                placeholder="Your Question..?"
                 onChange={(e) => setQuestion(e.target.value)}
                 className={clsx(classes.input)}
               />
-              <Button endIcon={<SendIcon />} onClick={() => handleSubmit()} />
+              <Button
+                endIcon={<SendIcon />}
+                onClick={() => handleSubmit()}
+                disabled={!document?.text}
+              />
             </Box>
           </Box>
         </Grid>

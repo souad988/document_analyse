@@ -27,7 +27,6 @@ export const textSummarize = createAsyncThunk('documents/textSummarize', async (
     const response = await axios.post(`${REACT_APP_BACKEND_URL}/summarize`, text, {
       headers: { 'Content-Type': 'application/json' },
     });
-    console.log('response from backend', response);
     return response.data;
   } catch (err) {
     return rejectWithValue(err.response.data.error);
@@ -91,16 +90,12 @@ const documentManagerSlice = createSlice({
           summary: action.payload,
         };
       })
-      .addCase(textSummarize.rejected, (state, action) => {
-        // Update state when text summarization action fails
-        console.log('payload error', action.payload);
-        return {
-          ...state,
-          loading: false,
-          status: 'failed',
-          error: action.payload,
-        };
-      });
+      .addCase(textSummarize.rejected, (state, action) => ({
+        ...state,
+        loading: false,
+        status: 'failed',
+        error: action.payload,
+      }));
   },
 });
 

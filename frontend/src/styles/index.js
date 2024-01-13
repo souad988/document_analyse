@@ -38,6 +38,7 @@ const mainStyles = (theme) => ({
     color: theme.palette.contrast,
     fontWeight: 700,
     backgroundColor: theme.palette.title.main,
+    alignSelf: 'end',
   },
   mainTitle: {
     color: theme.palette.title.main,
@@ -52,13 +53,19 @@ const mainStyles = (theme) => ({
   },
   textArea: {
     margin: '1rem',
-    padding: '2%',
     resize: 'vertical',
     overflowY: 'scroll',
+    color: theme.palette.text,
     border: 'none',
+    '&::placeholder': {
+      color: theme.palette.text,
+    },
   },
   boxPadding: {
     padding: '2%',
+    [theme.breakpoints.up('555')]: {
+      padding: '2%',
+    },
   },
   logo: {
     fontWeight: 900,
@@ -66,7 +73,7 @@ const mainStyles = (theme) => ({
   link: {
     color: theme.palette.title.secondary,
     fontWeight: 700,
-    marginRight: '2%',
+    margin: '0 3%',
     textDecoration: 'none',
     '&:hover': {
       color: theme.palette.title.main,
@@ -92,6 +99,9 @@ const mainStyles = (theme) => ({
   input: {
     border: 'none',
     width: '90%',
+    '&:focus': {
+      outline: 'none',
+    },
   },
   bullet: {
     width: '25px',
@@ -106,7 +116,7 @@ const mainStyles = (theme) => ({
     fontSize: '1rem',
   },
   scrollable: {
-    height: '45vh',
+    height: '40vh',
     resize: 'vertical',
     overflowY: 'scroll',
   },
@@ -115,6 +125,18 @@ const mainStyles = (theme) => ({
   },
   secondaryColor: {
     backgroundColor: theme.palette.title.main,
+  },
+  nav: {
+    width: '300px',
+  },
+  marginButtom: {
+    marginButtom: '3vh',
+  },
+  verticalBoxPadding: {
+    padding: '1% 0',
+  },
+  midContainer: {
+    width: '90%',
   },
 });
 

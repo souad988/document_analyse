@@ -34,6 +34,7 @@ const TextSummary = () => {
           xs={12}
           lg={12}
         >
+          { summary?.length > 0 && (
           <Box
             className={clsx(
               classes.backgroundColor,
@@ -46,8 +47,8 @@ const TextSummary = () => {
               <CircularProgress />
             ) : (
               <>
-                {status === 'succeeded' && (
-                <Typography>{summary}</Typography>
+                {(status === 'succeeded' || status === 'idle') && (
+                <Typography className={classes.text}>{summary}</Typography>
                 )}
                 {status === 'failed' && (
                 <Typography className={classes.error}>{error}</Typography>
@@ -55,6 +56,7 @@ const TextSummary = () => {
               </>
             )}
           </Box>
+          )}
         </Grid>
         <Grid item xs={12} lg={12}>
           <Box
@@ -77,6 +79,7 @@ const TextSummary = () => {
                 clsx(classes.textArea,
                   classes.text,
                   classes.fullWidth,
+                  classes.boxPadding,
                   classes.shadow)
 }
             />
@@ -85,7 +88,7 @@ const TextSummary = () => {
               type="submit"
               onClick={() => dispatch(textSummarize(text))}
               className={classes.btn}
-              disabled={loading || !text.length}
+              disabled={loading || !text?.length}
             >
               Summarize
             </Button>

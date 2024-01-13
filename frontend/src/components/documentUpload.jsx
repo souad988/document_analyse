@@ -9,6 +9,7 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { uploadDocument } from '../store/slices/documentManagerSlice';
+import { initializeQAndA } from '../store/slices/questionAnswerSlice';
 import useCustomStyles from '../styles/customStyle';
 import mainStyles from '../styles';
 import validationRules from './scripts';
@@ -28,100 +29,93 @@ const DocumentUploadForm = (props) => {
   const {
     document, status, loading, error,
   } = useSelector((state) => state.documents);
-
   const handleFileButtonClick = (fileInput) => {
     fileInput.current.click();
   };
-  console.log('values', values, errors);
   const handleChange = (event) => {
     setTouched({ file: true });
     setFieldValue('file', event.currentTarget.files[0], true).then((errors) => {
-      errors.file && setFieldValue('file', null, false);
+      if (errors.file) {
+        setFieldValue('file', null, false);
+      }
     });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(initializeQAndA());
     await dispatch(uploadDocument(values.file));
     resetForm();
   };
   return (
     <Grid
-      container
-      spacing={2}
-      className={classes.justifyContentCenter}
+      xs={12}
     >
-      <Grid
-        item
-        xs={12}
-        lg={8}
+      <Box
+        className={clsx(
+          classes.backgroundColor,
+          classes.flexVerticalCenter,
+          classes.shadow,
+          classes.boxPadding,
+        )}
       >
-        <Box
-          className={clsx(
-            classes.backgroundColor,
-            classes.flexVerticalCenter,
-            classes.shadow,
-            classes.boxPadding,
-          )}
-        >
-          {loading ? (
-            <CircularProgress />
-          ) : (
-            <>
-              {(status === 'succeeded' || (status === 'idle' && document.name)) && (
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <>
+            {(status === 'succeeded' || (status === 'idle' && document?.name)) && (
               <Typography className={classes.text}>{document.name}</Typography>
-              )}
-              {status === 'failed' && (
+            )}
+            {status === 'failed' && (
               <Typography className={classes.error}>{error}</Typography>
-              )}
-            </>
-          )}
-          <Button
-            variant="outlined"
-            size="large"
-            margin="normal"
-            onClick={() => handleFileButtonClick(fileInputRef)}
-            fullWidth
-          >
-            Select File
-          </Button>
-          <FormControl
-            variant="outlined"
-            size="small"
-            fullWidth
-            margin="none"
-          >
-            <input
-              ref={fileInputRef}
-              className={classes.displayNone}
-              aria-hidden="true"
-              type="file"
-              accept="csv"
-              name="file"
-              onChange={(event) => {
-                handleChange(event);
-              }}
-            />
-            <Typography color="textSecondary" variant="caption" component="span" id="file_count_el">
-              {
+            )}
+          </>
+        )}
+        <Button
+          variant="outlined"
+          size="large"
+          margin="normal"
+          onClick={() => handleFileButtonClick(fileInputRef)}
+          fullWidth
+        >
+          Select File
+        </Button>
+        <FormControl
+          variant="outlined"
+          size="small"
+          fullWidth
+          margin="none"
+        >
+          <input
+            ref={fileInputRef}
+            className={classes.displayNone}
+            aria-hidden="true"
+            type="file"
+            accept="csv"
+            name="file"
+            onChange={(event) => {
+              handleChange(event);
+            }}
+          />
+          <Typography color="textSecondary" variant="caption" component="span" id="file_count_el">
+            {
                   values.file && values.file.name
                 }
-            </Typography>
-            <FormHelperText error>
-              {touched.file && errors.file && errors.file}
-            </FormHelperText>
-          </FormControl>
-          <Button
-            endIcon={<FileUploadIcon />}
-            variant="contained"
-            type="submit"
-            onClick={handleSubmit}
-            className={classes.btn}
-            disabled={loading || !values.file}
-          >
-            Upload
-          </Button>
-        </Box>
-      </Grid>
+          </Typography>
+          <FormHelperText error>
+            {touched.file && errors.file && errors.file}
+          </FormHelperText>
+        </FormControl>
+        <Button
+          endIcon={<FileUploadIcon />}
+          variant="contained"
+          type="submit"
+          onClick={handleSubmit}
+          className={classes.btn}
+          disabled={loading || !values.file}
+        >
+          Upload
+        </Button>
+      </Box>
     </Grid>
   );
 };

@@ -1,9 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Layout from './views/layout';
-import TextSummary from './components/textSummary';
+import TextSummary from './views/textSummary';
 import QuestionAnswer from './views/questionAnswer';
 
 /**
@@ -37,19 +36,15 @@ const theme = createTheme({
     },
   },
 });
-const App = () => {
-  const { document } = useSelector((state) => state.documents);
-  const { loading, questions, answers } = useSelector((state) => state.questionAnswer);
-  return (
-    <ThemeProvider theme={theme}>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="summarize" element={<TextSummary />} />
-          <Route path="/Q&A" element={<QuestionAnswer />} />
-        </Route>
-      </Routes>
-    </ThemeProvider>
-  );
-};
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="summarize" element={<TextSummary />} />
+        <Route path="/" element={<QuestionAnswer />} />
+      </Route>
+    </Routes>
+  </ThemeProvider>
+);
 
 export default App;

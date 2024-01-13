@@ -21,7 +21,7 @@ function Header() {
         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }} className={clsx(classes.logo, classes.mainTitle)}>
           {'Doc{Nlp}'}
         </Typography>
-        <nav>
+        <nav className={clsx(classes.nav, classes.flexHorizontalCenter)}>
           <Link
             to="/summarize"
             className={classes.link}
@@ -35,7 +35,7 @@ function Header() {
             Categorize
           </Link>
           <Link
-            to="/Q&A"
+            to="/"
             className={classes.link}
           >
             Q&A

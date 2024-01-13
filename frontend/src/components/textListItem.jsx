@@ -11,8 +11,8 @@ function TextListItem(props) {
   const { type, text, loading } = props;
   const classes = useCustomStyles(mainStyles);
   return (
-    <Grid container className={classes.boxPadding} direction='column' >
-      <Grid container item xs={1} lg={1} md={1} direction="row" alignItems='center' >
+    <Grid container className={classes.verticalBoxPadding}>
+      <Grid container item xs={1} lg={1} md={1} direction="row" alignItems="center">
         <Box
           className={clsx(
             classes.bullet,
@@ -23,19 +23,14 @@ function TextListItem(props) {
           {' '}
           {type}
         </Box>
-        <Typography
-              className={clsx(classes.text)}
-            >
-              {type === 'Q'? 'you :' : 'doc{nlp} :'}
-              </Typography>
       </Grid>
       <Grid
         item
-        xs={10}
-        lg={10}
-        md={10}
-        sx={{paddingLeft: '5%'}}
-        
+        xs={11}
+        lg={11}
+        md={11}
+        sx={{ paddingLeft: '1%' }}
+
       >
         {loading
           ? <LinearProgress color="inherit" />
@@ -43,7 +38,7 @@ function TextListItem(props) {
             <Typography
               className={clsx(classes.text)}
             >
-              {text}
+              {`- ${text}`}
             </Typography>
           )}
 
