@@ -10,6 +10,10 @@ from .utils import *
 import os
 import time
 import json
+from openai import OpenAI
+
+client = OpenAI(api_key=os.environ.get("OPEN_API_TOKEN"))
+
 
 API_URL = os.environ.get('API_URL_GOOGLE')
 API_KEY= os.environ.get('API_TOKEN')
@@ -77,6 +81,28 @@ class DocumentSummarizeAPIView(APIView):
         result = ''
         if not text:
             return Response({'error': 'non valid input '}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            res = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {
+                    "role": "system",
+                    "content": "Summarize content you are provided with for a second-grade student."
+                    },
+                    {
+                    "role": "user",
+                    "content": text
+                    }
+                ],
+                temperature=0.7,
+                max_tokens=64,
+                top_p=1
+                )
+            return Response(res.choices[0].message, status=status.HTTP_200_OK) 
+        except APIException as e:
+            # Handle APIException and create the response
+                return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
+        '''
         chunks = split_chunks(text)
         try:
             for chunk in chunks:    
@@ -92,3 +118,4 @@ class DocumentSummarizeAPIView(APIView):
             # Handle APIException and create the response
                 print('error for exeption', str(e))
                 return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        '''
