@@ -160,14 +160,12 @@ To stop:
 <br/>
 <br/>
 
-#### Hugging face API key
-- Visit [hagging face url](https://huggingface.co/settings/tokens) create a new account and a new api key after email confirmation.
+#### Openai API key
+- Visit openai website create a new account and a new api key after email confirmation.
 - Create a file named **.env** in the backend/backend folder (same directory with settings.py), with the following content
 ```
 #.env
-REACT_APP_BACKEND_DEVELOPMENT_URL=http://127.0.0.1:8000/api/document
-API_TOKEN='your token'
-
+OPEN_API_TOKEN='your token'
 ```
 
 ## Setup Frontend
