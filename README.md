@@ -1,6 +1,6 @@
 
 ![Screenshot from 2024-01-13 01-16-52](https://github.com/souad988/document_analyse/assets/59707859/e7684790-2772-4bab-91d1-b4f657b5c0f6)
-![Screenshot from 2024-01-13 02-15-58](https://github.com/souad988/document_analyse/assets/59707859/63aba80c-440f-45c0-bc61-b6c9e7146206)
+![Screenshot from 2024-01-15 11-14-35](https://github.com/souad988/document_analyse/assets/59707859/9e697cee-eb8c-45bc-a179-fc0091ff7059)
 ![Screenshot from 2024-01-13 02-19-16](https://github.com/souad988/document_analyse/assets/59707859/35c4437f-ee59-4aff-a838-e031a14049f6)
 ![Screenshot from 2024-01-13 02-23-17](https://github.com/souad988/document_analyse/assets/59707859/2241593c-f320-4610-b119-2e7792c7730f)
 
