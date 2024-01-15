@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Retrieve data from local storage or set default empty values
 const localData = JSON.parse(localStorage.getItem('docData')) || {
-  document: {}, answers: [], questions: [], textToSummarize: '', summary: '',
+  document: {}, textToSummarize: '', summary: '',
 };
 const { REACT_APP_BACKEND_URL } = process.env;
 
@@ -22,14 +22,12 @@ export const uploadDocument = createAsyncThunk('documents/uploadDocument', async
 
 // Async Thunk to summarize text
 export const textSummarize = createAsyncThunk('documents/textSummarize', async (text, { rejectWithValue }) => {
-  // Update local storage with the provided text
-  localStorage.setItem('docData', JSON.stringify({ ...localData, textToSummarize: text }));
   try {
   // Summarize the text using Axios POST request
     const response = await axios.post(`${REACT_APP_BACKEND_URL}/summarize`, text, {
       headers: { 'Content-Type': 'application/json' },
     });
-    return response.data;
+    return { summary: response.data, textToSummarize: text };
   } catch (err) {
     return rejectWithValue(err.response.data.error);
   }
@@ -84,12 +82,18 @@ const documentManagerSlice = createSlice({
       })
       .addCase(textSummarize.fulfilled, (state, action) => {
         // Update state when text summarization action succeeds
-        localStorage.setItem('docData', JSON.stringify({ ...localData, summary: action.payload }));
+        localStorage.setItem('docData', JSON.stringify(
+          {
+            ...localData,
+            summary: action.payload.summary,
+            textToSummarize: action.payload.textToSummarize,
+          },
+        ));
         return {
           ...state,
           loading: false,
           status: 'succeeded',
-          summary: action.payload,
+          summary: action.payload.summary,
         };
       })
       .addCase(textSummarize.rejected, (state, action) => ({

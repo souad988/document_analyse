@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Retrieve data from local storage or set default empty values
 const localData = JSON.parse(localStorage.getItem('docData')) || {
-  document: {}, answers: [], questions: [], textToSummarize: '', summary: '',
+  document: {}, answers: [], questions: [],
 };
 const { REACT_APP_BACKEND_URL } = process.env;
 
@@ -27,7 +27,7 @@ export const initializeQAndA = () => ({
 const questionAnswerSlice = createSlice({
   name: 'documents',
   initialState: {
-    document: localData.document, // Holds uploaded document data
+    document: localData.document || {}, // Holds uploaded document data
     loading: false, // Indicates if actions are in progress
     error: null, // Holds error information if any action fails
     status: 'idle', // Represents the current status of actions (idle/loading/succeeded/failed)
