@@ -37,13 +37,35 @@ class QuestionAnswerAPIView(APIView):
         question = request.data['question']
         if not context or not question:
             return Response({'error': 'non valid input '}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            res = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {
+                    "role": "system",
+                    "content": f"Please in the context of the content you are provided with answer this question: {question}." 
+                    },
+                    {
+                    "role": "user",
+                    "content": context
+                    }
+                ],
+                temperature=0.7,
+                max_tokens=64,
+                top_p=1
+                )
+            return Response({'answer': res.choices[0].message.content}, status=status.HTTP_200_OK) 
+        except APIException as e:
+            # Handle APIException and create the response
+                return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
+        '''
         try:    
                 data = {'context': context, 'question': question}
                 response = requests.post(QA_API_URL, headers={"Authorization": f"Bearer {API_KEY}"}, json=data)
                 data = response.json()
                 return Response(data, status=status.HTTP_200_OK)
         except APIException as e:
-                return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)'''
         
 class DocumentUploadAPIView(APIView):
     """

@@ -2,7 +2,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 // Retrieve data from local storage or set default empty values
-const localData = JSON.parse(localStorage.getItem('docData')) || { document: {}, answers: [], questions: [] };
+const localData = JSON.parse(localStorage.getItem('docData')) || {
+  document: {}, answers: [], questions: [], textToSummarize: '', summary: '',
+};
 const { REACT_APP_BACKEND_URL } = process.env;
 
 export const questionAnswer = createAsyncThunk('documents/questionAnswer', async (data, { rejectWithValue }) => {

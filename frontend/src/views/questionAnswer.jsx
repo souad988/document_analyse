@@ -26,6 +26,7 @@ function QuestionAnswer() {
 
   const handleSubmit = () => {
     dispatch(questionAnswer({ text: document.text, question }));
+    setQuestion('');
   };
   return (
     <Container
@@ -72,7 +73,7 @@ function QuestionAnswer() {
                   </Typography>
                 )
                 : questions && questions.map((value, index) => (
-                  <Box key={`qacontainer${value}`}>
+                  <Box key={`${index}qacontainer${value}`}>
                     <TextListItem type="Q" text={value} />
                     <TextListItem
                       type="A"

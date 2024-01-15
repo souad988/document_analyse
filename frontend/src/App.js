@@ -5,10 +5,6 @@ import Layout from './views/layout';
 import TextSummary from './views/textSummary';
 import QuestionAnswer from './views/questionAnswer';
 
-/**
- *
-
- */
 const theme = createTheme({
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',

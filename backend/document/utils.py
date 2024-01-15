@@ -16,7 +16,6 @@ def extract_text_from_pdf(file):
         page_content = page.extract_text()
         words = words = re.findall(r'\S+|\s', page_content)
         words = [word for word in words if word not in [' ', '\n']]
-        print('words',words)
         # Join the words with spaces
         return ' '.join(words)
 
